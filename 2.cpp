@@ -28,14 +28,13 @@ char V[2<<10][2<<10];
 int D[2<<10][2<<10];
 char Z[2<<10][2<<10];
 PII P[2<<10][2<<10];
-// vector<string> M[2<<10];
 queue<PII> q;
 
 void bfs(int i, int j){
     q.push({i,j});
     D[i][j] = 0;
-    PII cases[4] = { {1,0}, {-1,0}, {0,1}, {0,-1}}; // R, L,U,D
-    char moves[4] = {'R','L','U','D'};
+    PII cases[4] = { {1,0}, {-1,0}, {0,1}, {0,-1}}; // U,D,R,L
+    char moves[4] = {'D','U','R','L'};
     while(!q.empty()){
         PII s = q.front(); 
         q.pop();
@@ -44,7 +43,7 @@ void bfs(int i, int j){
             int ni = cases[k].fi, nj = cases[k].se;
             ni += s.fi;
             nj += s.se;
-            if (ni < 0 || ni >= N || nj < 0 || nj >= M || MAP[ni][nj] == '#' || V[ni][nj]) {
+            if (ni < 0 || ni >= N || nj < 0 || nj >= M || MAP[ni][nj] == '#' || MAP[ni][nj] == 'A' || V[ni][nj]) {
                 continue;
             }
             V[ni][nj] = true;
@@ -70,17 +69,23 @@ int main(){
     }
     bfs(si, sj); 
     int res = D[ei][ej];
-    if(D[ei][ej]){
-        cout << "YES" << endl;
-        cout << res << endl;
-    }
-    PII c = {ei, ej};
-    per(i, 0, res){
-        PII c = P[c.fi][c.se];
-        char res2 = Z[c.fi][c.se];
-        cout << res2 << " ";
-
-
-    }
+    if (res){
+        if(D[ei][ej]){
+            cout << "YES" << endl;
+            cout << res << endl;
+        }
+        int ci = ei, cj = ej;
+        string res2;
+        per(i, 0, res){
+            res2.pb(Z[ci][cj]);
+            PII x = P[ci][cj];
+            ci = x.fi;
+            cj = x.se;
+        }
+        reverse(all(res2));
+        cout << res2 << endl;
+    } else{
+        cout << "NO" << endl;
+    } 
     return 0;
 }
