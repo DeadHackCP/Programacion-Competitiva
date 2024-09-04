@@ -26,26 +26,33 @@ int ei, ej;
 char MAP[2<<10][2<<10];
 char V[2<<10][2<<10];
 int D[2<<10][2<<10];
-char P[2<<10][2<<10];
+char Z[2<<10][2<<10];
+PII P[2<<10][2<<10];
+// vector<string> M[2<<10];
 queue<PII> q;
 
 void bfs(int i, int j){
     q.push({i,j});
+    D[i][j] = 0;
+    PII cases[4] = { {1,0}, {-1,0}, {0,1}, {0,-1}}; // R, L,U,D
+    char moves[4] = {'R','L','U','D'};
     while(!q.empty()){
-        cout <<"start distance which should be 0 forever: "  << D[i][j] << endl;
         PII s = q.front(); 
-        if (s.fi < 0 || s.fi >= N || s.se < 0 || s.se >= M || MAP[s.fi][s.se] == '#' || V[s.fi][s.se] || q.empty()) {q.pop();continue;}
-        cout << s.fi << " " << s.se << endl;
         q.pop();
         V[s.fi][s.se] = true;
-        q.push({s.fi+1,s.se});
-        D[s.fi+1][s.se] = D[s.fi][s.se]+1;  
-        q.push({s.fi-1,s.se});
-        D[s.fi-1][s.se] = D[s.fi][s.se]+1;  
-        q.push({s.fi,s.se+1});
-        D[s.fi][s.se+1] = D[s.fi][s.se]+1;  
-        q.push({s.fi,s.se-1});
-        D[s.fi][s.se-1] = D[s.fi][s.se]+1;  
+        rep(k, 0, 4){
+            int ni = cases[k].fi, nj = cases[k].se;
+            ni += s.fi;
+            nj += s.se;
+            if (ni < 0 || ni >= N || nj < 0 || nj >= M || MAP[ni][nj] == '#' || V[ni][nj]) {
+                continue;
+            }
+            V[ni][nj] = true;
+            D[ni][nj] = D[s.fi][s.se] + 1;
+            Z[ni][nj] = moves[k];
+            P[ni][nj] = {s.fi, s.se};
+            q.push({ni,nj});
+        } 
     }
 }
 
@@ -62,6 +69,18 @@ int main(){
         }
     }
     bfs(si, sj); 
-    cout << D[si][sj] << endl;
+    int res = D[ei][ej];
+    if(D[ei][ej]){
+        cout << "YES" << endl;
+        cout << res << endl;
+    }
+    PII c = {ei, ej};
+    per(i, 0, res){
+        PII c = P[c.fi][c.se];
+        char res2 = Z[c.fi][c.se];
+        cout << res2 << " ";
+
+
+    }
     return 0;
 }
