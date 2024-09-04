@@ -1,0 +1,53 @@
+.vscode
+bin/
+# Ignore object files and static libraries
+*.o
+*.a
+*.lo
+*.la
+
+# Ignore dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Ignore executables (without extensions and with common extensions)
+*.exe
+*.out
+*.app
+*.bin
+*.elf
+
+# Ignore precompiled headers
+*.gch
+*.pch
+
+# Ignore debugging files
+*.dSYM/
+*.stackdump
+
+# Ignore compiled Python files (if relevant to the project)
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore CMake artifacts
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore auto-generated makefiles and build scripts
+*.make
+*.mk
+*.sh
+
+# Ignore backup files (optional)
+*.bak
+*.old
+*.orig
+
+# Ignore other build-related directories
+/build/
+/Debug/
+/Release/
