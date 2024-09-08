@@ -20,7 +20,7 @@ void dfs(int i, int j) {
 
 int main() {
     cin >> n >> m;
-    cin.ignore(); 
+    cin.ignore();
     rep(i, 0, n) {
         string line;
         getline(cin, line);
