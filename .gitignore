@@ -52,5 +52,6 @@ Makefile
 /Debug/
 /Release/
 
+/bin/
 
 tempCodeRunnerFile.cpp
